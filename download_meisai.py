@@ -28,7 +28,6 @@ def create(host, port, downloads):
     })
 
     return webdriver.Remote(command_executor=f'http://{host}:{port}/wd/hub',
-                            desired_capabilities=options.to_capabilities(),
                             options=options)
 
 def download_meisai(driver, user, password, yyyymm):
