@@ -4,6 +4,7 @@ import time
 
 from invoke import run
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.support.ui import WebDriverWait
 import requests
@@ -32,17 +33,17 @@ def create(host, port, downloads):
 
 def download_meisai(driver, user, password, yyyymm):
     driver.get('https://www.pitapa.com')
-    driver.find_element_by_id('h_menu_sub_login').click()
+    driver.find_element(By.ID, 'h_menu_sub_login').click()
     WebDriverWait(driver, 3).until(lambda d: len(d.window_handles) > 1)
     driver.switch_to.window(driver.window_handles[1])
-    driver.find_element_by_name('id').send_keys(user)
-    driver.find_element_by_name('password').send_keys(password)
-    driver.find_element_by_name('login').click()
-    driver.find_element_by_link_text('ご利用代金・明細照会').click()
-    meisai_select = driver.find_elements_by_name('claimYM')[-1]
+    driver.find_element(By.NAME, 'id').send_keys(user)
+    driver.find_element(By.NAME, 'password').send_keys(password)
+    driver.find_element(By.NAME, 'login').click()
+    driver.find_element(By.LINK_TEXT, 'ご利用代金・明細照会').click()
+    meisai_select = driver.find_elements(By.NAME, 'claimYM')[-1]
     Select(meisai_select).select_by_value(yyyymm)
-    driver.find_element_by_name('displaySubmit').click()
-    driver.find_element_by_name('csvSubmit').click()
+    driver.find_element(By.NAME, 'displaySubmit').click()
+    driver.find_element(By.NAME, 'csvSubmit').click()
 
 
 def wait_download(container, path):
